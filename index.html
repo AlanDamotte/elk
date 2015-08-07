@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ELK</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="components/normalize-css/normalize.css" />
+  <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" />
+  <link rel="stylesheet" href="css/ruban.min.css" />
+  <link rel="stylesheet" href="css/ruban-print.min.css" media="print" />
+  <style>
+	body {
+	  color: white;
+	  border-color: white;
+	}
+	
+    section {
+	  color: white;
+      background-color: #0071B5;
+      border-left: 1em solid white;
+      border-right: 1em solid white;
+    }
+
+    .pagination {
+      right: 2.6em;
+    }
+
+    pre code {
+      background-color: inherit;
+    }
+
+    pre .xml .javascript {
+      opacity: 1;
+    }
+
+    #examples ul {
+      padding-left: 0;
+    }
+	
+	#elk, #elk1, #presentation, #installation, #pourquoi, #components, #implementations, #dontforget {
+      color: white;
+      background-color: #0071B5;
+	  border-color: #0071B5;
+    }
+
+    #getting-started-unleash-your-power {
+      color: white;
+      background-color: #0071B5;
+      border-color: white;
+    }
+
+    #getting-started-unleash-your-power strong {
+      text-shadow: 0.06em 0.06em 0 #0071B5, 0.07em 0.07em 0 #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <section id="elk" class="no-toc">
+   <h1>
+	<ul>
+      <li><strong> <FONT color="#FFFF00">E</FONT></strong>lasticsearch</li>
+      <li><strong><FONT color="#FFFF00">L</FONT></strong>ogstash</li>
+      <li><strong><FONT color="#FFFF00">K</FONT></strong>ibana</li>
+    </ul>
+	</h1>
+  </section>
+  <section id="elk1" class="no-toc" text-align:center>
+    <h1><strong>Analyze</strong>, <strong>Search</strong>,<br> <strong>Visualize</strong><br> your data!</h1>
+  </section>
+  <section id="presentation" class="no-toc" text-align:center>
+    <h1>Alan Damotte</h1>
+	<ul>
+	  <li><i class="fa fa-twitter"></i><a href="https://twitter.com/AlanDams" title="Alan Damotte">	@AlanDams</a></li>
+	  <li><i class="fa fa-linkedin"></i><a href="https://fr.linkedin.com/pub/alan-damotte/a9/990/354" title="Alan Damotte">	Alan Damotte</a></li>
+	  <li><i class="fa fa-envelope"></i></i><a href="mailto:alan.damotte@gmail.com" title="alan.damotte@gmail.com">	Alan.damotte@gmail.com</a></li>
+	</ul>
+  </section>
+  
+  <section id="table-of-contents" class="toc">
+    <h1>Table of contents</h1>
+  </section>
+  <section id="pourquoi">
+    <h1><i class="fa fa-rocket"></i> Why should you use ELK ?</h1>
+  </section>
+  <section id="pourquoi-elk1">
+   <ul>
+      Data <strong>constantly</strong> flows into your systems, but it can quickly grow to be <strong>fat</strong> !   
+   </ul>
+  </section>
+  <section id="pourquoi-elk2">
+   <ul>
+      As your data set <strong>grows larger</strong>, your analytics will <strong>slow up</strong>, resulting in sluggish insights.   
+   </ul>
+  </section>
+  <section id="pourquoi-elk3">
+   <ul>
+       <li>How can you maintain valuable business insights?</li> 
+	   <li><i class="fa fa-thumbs-o-up"></i>	Use <strong>ELK !</strong></li> 
+   </ul>
+  </section>
+  <section id="pourquoi-elk4">
+   <ol>
+      <li><strong>Centralize</strong> your logs</li>
+      <li><strong>Parse</strong> and <strong>gather</strong> only the fields you need</li>
+      <li><strong>Visualize</strong> your logs and <strong>identify</strong> the information <strong>quickly</strong></li>
+    </ol>
+  </section>
+  <section id="components">
+    <h1><i class="fa fa-wrench"></i> The components</h1>
+  </section>
+    <section id="components1">
+    <ol>
+      <li><strong>Logstash</strong> : Processes incoming logs</li>
+      <li><strong>Elasticsearch</strong> : Stores all of the logs</li>
+      <li><strong>Kibana</strong> : Web interface for searching and visualizing logs</li>
+    </ol>
+  </section>
+  <section id="installation">
+    <h1><i class="fa fa-download"></i> How to quickly test it ?</h1>
+  </section>
+  <section id="Docker-ELK">
+    <h1>Docker ELK</h1>
+	<ul>
+		<li>You can use my stack on Docker, all you need is just to set up your Logstash configurations !</li>
+		<li><i class="fa fa-git-square"></i><a href="https://gitlab.kazan.priv.atos.fr/A605547/docker-elk/tree/master" title="Docker ELK">	Docker ELK repository</a></li>
+	</ul>
+    <ol>
+      <li>Follow the tutorial (in French)</li>
+      <li>Enjoy !</li>
+    </ol>
+  </section>
+  <section id="implementations">
+    <h1><i class="fa fa-cog"></i> Possible implementations</h1>
+  </section>
+  <section id="local">
+    <ul>
+	 With my Docker ELK, locally...
+	</ul>
+  </section>
+  <section id="shipper">
+	 ...or with a more advanced solution
+	 <img src="./ELK.png" align="middle" height="580" width="725"/>
+
+  </section>
+    <section id="dontforget">
+    <h1><i class="fa fa-star"></i> Don't forget...</h1>
+	</section>
+	 <section id="df1">
+   <ul>
+      ...in your new projects to format your logs <strong>correctly</strong>.
+   </ul>
+  </section>
+  <section id="df2">
+   <ul>
+      ...set up this solution <strong>while you build your app</strong>.
+   </ul>
+  </section>
+  <section id="df3">
+   <ul>
+      <li><i class="fa fa-caret-right"></i></i>	A small <strong>tip</strong> I can give you is to add an ID in your app which, for example, helps you follow a request through different services.</li>
+	  <li><br><li>
+	  <li><i class="fa fa-caret-right"></i></i>	In Kibana, you'll be able to see all the logs related to that request</li>
+   </ul>
+  </section>
+  <section id="Fin">
+  <h1>Thanks! Questions?</h1>
+   <ul>
+	  <li>Feel <strong>free</strong> to contact me !</li>
+	  <li><br><li>
+      <li><i class="fa fa-twitter"></i><a href="https://twitter.com/AlanDams" title="Alan Damotte">	@AlanDams</a></li>
+	  <li><i class="fa fa-envelope"></i></i><a href="mailto:alan.damotte@gmail.com" title="alan.damotte@gmail.com">	Alan.damotte@gmail.com</a></li>
+   </ul>
+  </section>
+  <script src="components/jquery/jquery.min.js"></script>
+  <script src="components/keymaster/keymaster.js"></script>
+  <script src="components/hammerjs/hammer.min.js"></script>
+  <script src="components/highlightjs/highlight.pack.js"></script>
+  <script src="js/ruban.min.js"></script>
+  <script>
+    function asciiRuban(current) {
+      var ruban = '';
+      for (var i = 0; i < 3; i++) {
+        if (i === current) {
+          ruban += '[| ' + 'ELK'[i] + ' |]';
+        } else {
+          ruban += '| ' + 'ELK'[i] + ' |';
+        }
+        ruban += '\n';
+      }
+      return ruban;
+    }
+
+    var timeoutId, i = 0;
+
+    $('#elk').on({
+      active: function() {
+        var $pre = $(this).find('pre');
+        timeoutId = setInterval(function() {
+          var ruban = asciiRuban(i++ % 4);
+          $pre.html(ruban);
+        }, 1000);
+      },
+      inactive: function() {
+        clearInterval(timeoutId);
+      }
+    });
+
+    $('#events').on({
+      active: function() {
+        $(this).find('h1').stop().animate({marginLeft: '2em'}, 2000);
+      },
+      inactive:function() {
+        $(this).find('h1').stop().animate({marginLeft: 0});
+      }
+    });
+
+
+    var ruban = new Ruban({
+      pagination: true
+    });
+  </script>
+</body>
+</html>
