@@ -20,6 +20,11 @@
       border-left: 1em solid white;
       border-right: 1em solid white;
     }
+	
+	section aside{
+	  text-align: right; 
+	  font-size:50%;
+    }
 
     .pagination {
       right: 2.6em;
@@ -37,20 +42,18 @@
       padding-left: 0;
     }
 	
-	#elk, #elk1, #presentation, #installation, #pourquoi, #components, #implementations, #dontforget {
+	#elk, #elk1, #installation, #why, #components, #implementations, #dontforget, #end {
       color: white;
       background-color: #0071B5;
 	  border-color: #0071B5;
     }
 
-    #getting-started-unleash-your-power {
+	
+	#author {
       color: white;
       background-color: #0071B5;
-      border-color: white;
-    }
-
-    #getting-started-unleash-your-power strong {
-      text-shadow: 0.06em 0.06em 0 #0071B5, 0.07em 0.07em 0 #fff;
+	  border-left: 1em solid #0431B4;
+	  border-right: 1em solid #819FF7;
     }
   </style>
 </head>
@@ -68,7 +71,7 @@
   <section id="elk1" class="no-toc" text-align:center>
     <h1><strong>Analyze</strong>, <strong>Search</strong>,<br> <strong>Visualize</strong><br> your data!</h1>
   </section>
-  <section id="presentation" class="no-toc" text-align:center>
+  <section id="author" class="no-toc" text-align:center>
     <h1>Alan Damotte</h1>
 	<ul>
 	  <li><i class="fa fa-twitter"></i><a href="https://twitter.com/AlanDams" title="Alan Damotte">	@AlanDams</a></li>
@@ -80,26 +83,26 @@
   <section id="table-of-contents" class="toc">
     <h1>Table of contents</h1>
   </section>
-  <section id="pourquoi">
+  <section id="why">
     <h1><i class="fa fa-rocket"></i> Why should you use ELK ?</h1>
   </section>
-  <section id="pourquoi-elk1">
+  <section id="why-elk1">
    <ul>
       Data <strong>constantly</strong> flows into your systems, but it can quickly grow to be <strong>fat</strong> !   
    </ul>
   </section>
-  <section id="pourquoi-elk2">
+  <section id="why-elk2">
    <ul>
       As your data set <strong>grows larger</strong>, your analytics will <strong>slow up</strong>, resulting in sluggish insights.   
    </ul>
   </section>
-  <section id="pourquoi-elk3">
+  <section id="why-elk3">
    <ul>
        <li>How can you maintain valuable business insights?</li> 
 	   <li><i class="fa fa-thumbs-o-up"></i>	Use <strong>ELK !</strong></li> 
    </ul>
   </section>
-  <section id="pourquoi-elk4">
+  <section id="why-elk4">
    <ol>
       <li><strong>Centralize</strong> your logs</li>
       <li><strong>Parse</strong> and <strong>gather</strong> only the fields you need</li>
@@ -111,10 +114,39 @@
   </section>
     <section id="components1">
     <ol>
-      <li><strong>Logstash</strong> : Processes incoming logs</li>
-      <li><strong>Elasticsearch</strong> : Stores all of the logs</li>
+      <li><strong>Logstash</strong> : Processes incoming logs</li><br>
+      <li><strong>Elasticsearch</strong> : Stores all of the logs</li><br>
       <li><strong>Kibana</strong> : Web interface for searching and visualizing logs</li>
     </ol>
+  </section>
+  <section id="components2">
+	<h1>Logstash</h1>
+	   <ul>
+	 <li><i class="fa fa-caret-right"></i></i>	Centralize data processing of all types</li>
+	 <li><i class="fa fa-caret-right"></i></i>	Normalize varying schema and formats</li>
+	 <li><i class="fa fa-caret-right"></i></i>	Quickly extend to custom log formats</li>
+	 <li><i class="fa fa-caret-right"></i></i>	Easily add plugins for custom data sources</li>
+	    </ul>
+		<aside><a href="https://www.elastic.co/products/logstash" title="Logstash">Source</a></aside>
+  </section>
+  <section id="components3">
+	<h1>Elasticsearch</h1>
+	 <ul>
+		<li><i class="fa fa-caret-right"></i></i>	Distributed, scalable, and highly available</li>
+		<li><i class="fa fa-caret-right"></i></i>	Real-time search and analytics capabilities</li>
+		<li><i class="fa fa-caret-right"></i></i>	Sophisticated RESTful API</li>
+	 </ul>
+	 <aside><a href="https://www.elastic.co/products/elasticsearch" title="Elasticsearch">Source</a></aside>
+  </section>
+  <section id="components4">
+	<h1>Kibana</h1>
+		 <ul>
+		<li><i class="fa fa-caret-right"></i></i>	Flexible analytics and visualization platform</li>
+		<li><i class="fa fa-caret-right"></i></i>	Real-time summary and charting of streaming data</li>
+		<li><i class="fa fa-caret-right"></i></i>	Intuitive interface for a variety of users</li>
+		<li><i class="fa fa-caret-right"></i></i>	Instant sharing and embedding of dashboards</li>
+	 </ul>
+	 <aside><a href="https://www.elastic.co/products/kibana" title="Kibana">Source</a></aside>
   </section>
   <section id="installation">
     <h1><i class="fa fa-download"></i> How to quickly test it ?</h1>
@@ -159,11 +191,11 @@
   <section id="df3">
    <ul>
       <li><i class="fa fa-caret-right"></i></i>	A small <strong>tip</strong> I can give you is to add an ID in your app which, for example, helps you follow a request through different services.</li>
-	  <li><br><li>
+	  <br>
 	  <li><i class="fa fa-caret-right"></i></i>	In Kibana, you'll be able to see all the logs related to that request</li>
    </ul>
   </section>
-  <section id="Fin">
+  <section id="end">
   <h1>Thanks! Questions?</h1>
    <ul>
 	  <li>Feel <strong>free</strong> to contact me !</li>
