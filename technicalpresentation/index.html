@@ -48,7 +48,7 @@
     }
 	
 	
-	#tp, #case1, #logstash-configuration, #kibana #end {
+	#tp, #case1, #logstash-configuration, #kibana, #other, #end {
       color: white;
       background-color: #0071B5;
 	  border-color: #0071B5;
@@ -91,7 +91,7 @@
 	<ul>
 		Middle service get this request and produce this log
 	</ul>
-	<pre><code >127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.1" 200 35</code></pre>
+	<pre><code >127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/2 HTTP/1.1" 200 35</code></pre>
   </section>
   <section id="logs3">
 	<ul>
@@ -158,7 +158,7 @@ filter {
 filter{
 	if "access" in [tags]{
 		grok {
-			match => { "message" => ["%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NUMBER:responseTime:float} %{QS:referrer} %{QS:agent}","%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-)"]}
+			match => { "message" => ["&lt;pattern1&gt;","&lt;pattern2&gt;"]}
 		}
 		date {
 			locale => "en"
@@ -166,13 +166,41 @@ filter{
 			target => "@timestamp"
 			timezone => "Europe/Paris"
 		}
-		mutate{
+		mutate {
 			remove_field => ["timestamp"]
 		}
 
 	}
 }
 	</code></pre>
+	</ul>
+  </section>
+  <section id="patterns1">
+		Pattern 1
+		<pre><code style="font-size: 40%;">
+"%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NUMBER:responseTime:float} %{QS:referrer} %{QS:agent}"
+		</code></pre>
+		<ul style="font-size: 50%;">
+		<li><i style="color:yellow;">%{IPORHOST:clientip}</i>:	127.0.0.1</li>
+		<li><i style="color:yellow;">\[%{HTTPDATE:timestamp}\]</i>: 	[02/Jul/2015:00:13:48 +0200]</li>
+		<li><i style="color:yellow;">\"%{DATA:requestId}\"</i>:	 VboEgQpaiRAAAB0bBJgAAACD</li>
+		<li><i style="color:yellow;">%{WORD:verb}</i>: 	GET</li>
+		<li><i style="color:yellow;">%{NOTSPACE:request}</i>: 	/sthing/</li>
+		<li><i style="color:yellow;">%{NUMBER:responseTime:float}</i>: 	17173</li>
+	</ul>
+  </section>
+  127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.0" 200 3175 17173 "-" "-"
+  <section id="patterns2">
+		Pattern 2
+		<pre><code style="font-size: 40%;">
+"%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-)"
+		</code></pre>
+		<ul style="font-size: 50%;">
+		<li><i style="color:yellow;">%{IPORHOST:clientip}</i>:	127.0.0.1</li>
+		<li><i style="color:yellow;">\[%{HTTPDATE:timestamp}\]</i>: 	[02/Jul/2015:00:13:48 +0200]</li>
+		<li><i style="color:yellow;">\"%{DATA:requestId}\"</i>:	 VboEgQpaiRAAAB0bBJgAAACD</li>
+		<li><i style="color:yellow;">%{WORD:verb}</i>: 	GET</li>
+		<li><i style="color:yellow;">%{NOTSPACE:request}</i>: 	/sthing/2</li>
 	</ul>
   </section>
   <section id="traitement2">
@@ -182,7 +210,7 @@ filter{
 filter{
 	if "applicative" in [tags]{
 		grok {
-			match => { "message" =>"%{TIMESTAMP_ISO8601:timestampiso} - \[%{DATA:requestId}\] - \[%{LOGLEVEL:loglevel}\] \[%{WORD:class}.%{WORD}:%{NUMBER:line:float}\] - (?m)%{GREEDYDATA:content}"}
+			match => { "message" =>"&lt;pattern1&gt"}
 		}
 		date {
 			match => ["timestampiso", "yyyy-MM-dd HH:mm:ss,SSS"]
@@ -197,6 +225,21 @@ filter{
 	</code></pre>
 	</ul>
   </section>
+    <section id="patterns3">
+		Pattern
+		<pre><code style="font-size: 40%;">
+"%{TIMESTAMP_ISO8601:timestampiso} - \[%{DATA:requestId}\] - \[%{LOGLEVEL:loglevel}\] \[%{WORD:class}.%{WORD}:%{NUMBER:line:float}\] - (?m)%{GREEDYDATA:content}"
+		</code></pre>
+		<ul style="font-size: 50%;">
+		<li><i style="color:yellow;">%{TIMESTAMP_ISO8601:timestampiso}</i>:	2015-07-02 00:13:48,804</li>
+		<li><i style="color:yellow;">\[%{DATA:requestId}\]</i>: 	VboEgQpaiRAAAB0bBJgAAACD</li>
+		<li><i style="color:yellow;">\[%{LOGLEVEL:loglevel}\]</i>:	 INFO</li>
+		<li><i style="color:yellow;">%{WORD:class}</i>: 	Class</li>
+		<li><i style="color:yellow;">%{NUMBER:line:float}</i>: 	55</li>
+		<li><i style="color:yellow;">(?m)%{GREEDYDATA:content}</i>: 	Content</li>
+	</ul>
+  </section>
+  2015-07-02 00:13:48,804 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content
    <section id="output">
 	<ul>
 		Logstash output
@@ -230,6 +273,32 @@ output {
 		<li>Query <strong>entire</strong> phrase: <i>"to be or not to be"</i></li><br>
 		<li>Search in <strong>particular fields</strong>: <i>tags:(access AND middle)</i></li><br>
 		<li>Search for <strong>numeric range</strong>: <i>line_id:[30000 TO 80000]</i></li>
+	</ul>
+  </section>
+  <section id="other">
+    <h1><i class="fa fa-cubes"></i> Other possible use cases</h1>
+  </section>
+   <section id="others1">
+	<ul>
+		<li><i class="fa fa-globe"></i><a href="https://www.elastic.co/elasticon/2015/sf/performance-monitoring-with-the-elk-stack-collectd" title="collectd">	Performance monitoring</a><br>
+		<ul>
+			<br>
+			<li>Collect data from collectd</li>
+			<li>Keep track of your performance metric data</li>
+		</ul>
+		</li>
+	</ul>
+  </section>
+     <section id="others2">
+	<ul>
+		<li><i class="fa fa-globe"></i><a href="https://www.elastic.co/guide/en/beats/packetbeat/current/_overview.html" title="packetbeat">	Real-time network packet analyzer</a><br>
+		<ul>
+			<br>
+			<li>Capture the network traffic</li>
+			<li>Correlate the requests with the responses into transactions</li>
+			<li>Record the interesting fields for each transaction</li>
+		</ul>
+		</li>
 	</ul>
   </section>
     <section id="end">
