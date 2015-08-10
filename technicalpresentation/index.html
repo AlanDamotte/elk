@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ELK</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="../components/normalize-css/normalize.css" />
+  <link rel="stylesheet" href="../components/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../components/highlightjs/styles/tomorrow.css" />
+  <link rel="stylesheet" href="../css/ruban.min.css" />
+  <link rel="stylesheet" href="../css/ruban-print.min.css" media="print" />
+  <style>
+	body {
+	  color: white;
+	  border-color: white;
+	}
+	
+    section {
+	  color: white;
+      background-color: #0071B5;
+      border-left: 1em solid white;
+    }
+	
+	section aside{
+	  text-align: right; 
+	  font-size:50%;
+    }
+
+    .pagination {
+      right: 2.6em;
+    }
+
+    logs {
+      background-color: inherit;
+	  font-size:38%;
+    }
+
+    pre .xml .javascript {
+      opacity: 1;
+    }
+	
+	ul ul{
+		text-align: right; 
+		font-size:70%;
+	}
+
+    #examples ul {
+      padding-left: 0;
+    }
+	
+	
+	#tp, #case1, #logstash-configuration, #kibana #end {
+      color: white;
+      background-color: #0071B5;
+	  border-color: #0071B5;
+    }
+	
+	pre code {
+      background-color: inherit;
+    }
+
+  </style>
+</head>
+
+<body>
+  <section id="tp" class="no-toc">
+   <h1>
+	<ul>
+      <li><strong>ELK</strong></li>
+      <li>Technical presentation</li>
+    </ul>
+	</h1>
+  </section>  
+  <section id="table-of-contents" class="toc">
+    <h1>Table of contents</h1>
+  </section>
+  <section id="case1">
+    <h1><i class="fa fa-cube"></i> Use case presentation</h1>
+  </section>
+  <section id="implementation">
+   <ul>
+	<img style="margin:0px auto;display:block" src="./ELK.png" />
+   </ul>
+  </section>
+  <section id="logs">
+	<ul>
+		Imagine a request that generate this log in front service
+	</ul>
+	<pre><code >127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.0" 200 3175 17173 "-" "-"</code></pre>
+  </section>
+   <section id="logs2">
+	<ul>
+		Middle service get this request and produce this log
+	</ul>
+	<pre><code >127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.1" 200 35</code></pre>
+  </section>
+  <section id="logs3">
+	<ul>
+		Application logger will also produce these logs
+	<pre><code>
+2015-07-02 00:13:48,804 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content
+2015-07-02 00:13:48,885 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content
+</code></pre>
+	</ul>
+  </section>
+    <section id="tags">
+	<ul>
+		Imagine a rsyslog configuration that add these tags when shipping logs
+		<ul>
+		<br>
+			<li><strong>front-access</strong>: access logs produce in front service</li>
+			<li><strong>middle-access</strong>: access logs produce in middle service</li>
+			<li><strong>middle-applicative</strong>: logs produce by the middle service logger</li>
+		</ul>
+	</ul>
+  <section id="logstash-configuration">
+    <h1><i class="fa fa-filter"></i> Logstash configuration</h1>
+  </section>
+  </section>
+      <section id="input">
+	<ul>
+		Logstash input configurations
+		<pre><code>
+input {
+	syslog {
+		port => 5000
+	}
+}</code></pre>
+	</ul>
+  </section>
+  <section id="pretraitement">
+	<ul>
+		Logstash first filter
+		<pre><code style="font-size: 40%;">
+filter { 
+	if [program] == "front-access" {
+		mutate {
+			add_tag=&gt; ["front","access"]
+		}
+	}
+	if [program] == "middle-access" {
+		mutate {
+			add_tag=&gt; ["middle","access"]
+		}
+	}
+	if [program] == "middle-applicative" {
+		mutate {
+			add_tag=&gt; ["middle","applicative"]
+		}
+	}
+}
+	</code></pre>
+	</ul>
+  </section>
+   <section id="traitement1">
+	<ul>
+		Logstash second filter
+		<pre><code style="font-size: 40%;">
+filter{
+	if "access" in [tags]{
+		grok {
+			match => { "message" => ["%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NUMBER:responseTime:float} %{QS:referrer} %{QS:agent}","%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-)"]}
+		}
+		date {
+			locale => "en"
+			match => ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
+			target => "@timestamp"
+			timezone => "Europe/Paris"
+		}
+		mutate{
+			remove_field => ["timestamp"]
+		}
+
+	}
+}
+	</code></pre>
+	</ul>
+  </section>
+  <section id="traitement2">
+	<ul>
+		Logstash third filter
+		<pre><code style="font-size: 40%;">
+filter{
+	if "applicative" in [tags]{
+		grok {
+			match => { "message" =>"%{TIMESTAMP_ISO8601:timestampiso} - \[%{DATA:requestId}\] - \[%{LOGLEVEL:loglevel}\] \[%{WORD:class}.%{WORD}:%{NUMBER:line:float}\] - (?m)%{GREEDYDATA:content}"}
+		}
+		date {
+			match => ["timestampiso", "yyyy-MM-dd HH:mm:ss,SSS"]
+			target => "@timestamp"
+			timezone => "Europe/Paris"
+		}
+		mutate {
+			remove_field => ["timestampiso"]
+		}
+	}
+}
+	</code></pre>
+	</ul>
+  </section>
+   <section id="output">
+	<ul>
+		Logstash output
+		<pre><code style="font-size: 40%;">
+output {
+	elasticsearch { host => "elasticsearch" }
+	stdout { codec => rubydebug }
+}
+	</code></pre>
+	</ul>
+  </section>
+  <section id="Kibana">
+    <h1><i class="fa fa-tachometer"></i> Kibana</h1>
+  </section>
+    <section id="kibana1">
+   <ul>
+	<img style="margin:0px auto;display:block"  WIDTH="100%" src="./kibana.png" />
+   </ul>
+  </section>
+   <section id="id">
+   <ul>
+	<li> Search all the logs with this id...</li><br>
+	<img style="margin:0px auto;display:block" src="./id.png" /><br>
+	<li> ...And you'll see all the logs corresponding to a request.</li><br>
+   </ul>
+  </section>
+     <section id="queries">
+	<h1> Queries</h1>
+	<ul style="font-size:60%;">
+		<li><strong><i>to be or not to be</i></strong>: equivalent to <strong><i>to OR be OR or OR not OR to OR be</i></strong></li><br>
+		<li>Query <strong>entire</strong> phrase: <i>"to be or not to be"</i></li><br>
+		<li>Search in <strong>particular fields</strong>: <i>tags:(access AND middle)</i></li><br>
+		<li>Search for <strong>numeric range</strong>: <i>line_id:[30000 TO 80000]</i></li>
+	</ul>
+  </section>
+    <section id="end">
+  <h1>Thanks! Questions?</h1>
+   <ul>
+	  <li>Feel <strong>free</strong> to contact me !</li>
+	  <li><br><li>
+      <li><i class="fa fa-github"></i> <a href="http://alandamotte.github.io/" title="Alan Damotte">	Alan Damotte</a></li>
+	  <li><i class="fa fa-envelope"></i></i><a href="mailto:alan.damotte@gmail.com" title="alan.damotte@gmail.com">		Alan.damotte@gmail.com</a></li>
+   </ul>
+  </section>
+  <script src="../components/jquery/jquery.min.js"></script>
+  <script src="../components/keymaster/keymaster.js"></script>
+  <script src="../components/hammerjs/hammer.min.js"></script>
+  <script src="../components/highlightjs/highlight.pack.js"></script>
+  <script src="../js/ruban.min.js"></script>
+  <script>
+
+    var timeoutId, i = 0;
+
+    $('#events').on({
+      active: function() {
+        $(this).find('h1').stop().animate({marginLeft: '2em'}, 2000);
+      },
+      inactive:function() {
+        $(this).find('h1').stop().animate({marginLeft: 0});
+      }
+    });
+
+
+    var ruban = new Ruban({
+      pagination: true
+    });
+  </script>
+</body>
+</html>
