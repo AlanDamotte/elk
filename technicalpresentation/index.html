@@ -84,14 +84,18 @@
   <section id="logs">
 	<ul>
 		Imagine a request that generate this log in front service
-	</ul>
-	<pre><code >127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.0" 200 3175 17173 "-" "-"</code></pre>
+	
+	<pre><code >
+127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.0" 200 3175 17173 "-" "-"
+</code></pre></ul>
   </section>
    <section id="logs2">
 	<ul>
 		Middle service get this request and produce this log
-	</ul>
-	<pre><code >127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/2 HTTP/1.1" 200 35</code></pre>
+	
+	<pre><code >
+127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/2 HTTP/1.1" 200 35
+</code></pre></ul>
   </section>
   <section id="logs3">
 	<ul>
@@ -158,16 +162,16 @@ filter {
 filter{
 	if "access" in [tags]{
 		grok {
-			match => { "message" => ["&lt;pattern1&gt;","&lt;pattern2&gt;"]}
+			match => { "message" =&gt; ["&lt;pattern1&gt;","&lt;pattern2&gt;"]}
 		}
 		date {
-			locale => "en"
-			match => ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
-			target => "@timestamp"
-			timezone => "Europe/Paris"
+			locale =&gt; "en"
+			match =&gt; ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
+			target =&gt; "@timestamp"
+			timezone =&gt; "Europe/Paris"
 		}
 		mutate {
-			remove_field => ["timestamp"]
+			remove_field =&gt; ["timestamp"]
 		}
 
 	}
@@ -176,7 +180,7 @@ filter{
 	</ul>
   </section>
   <section id="patterns1">
-		Pattern 1
+		<ul>Pattern 1</ul>
 		<pre><code style="font-size: 40%;">
 "%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NUMBER:responseTime:float} %{QS:referrer} %{QS:agent}"
 		</code></pre>
@@ -191,7 +195,7 @@ filter{
   </section>
   127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.0" 200 3175 17173 "-" "-"
   <section id="patterns2">
-		Pattern 2
+		<ul>Pattern 2</ul>
 		<pre><code style="font-size: 40%;">
 "%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-)"
 		</code></pre>
@@ -225,8 +229,8 @@ filter{
 	</code></pre>
 	</ul>
   </section>
-    <section id="patterns3">
-		Pattern
+  <section id="patterns3">
+		<ul>Pattern</ul>
 		<pre><code style="font-size: 40%;">
 "%{TIMESTAMP_ISO8601:timestampiso} - \[%{DATA:requestId}\] - \[%{LOGLEVEL:loglevel}\] \[%{WORD:class}.%{WORD}:%{NUMBER:line:float}\] - (?m)%{GREEDYDATA:content}"
 		</code></pre>
@@ -239,10 +243,70 @@ filter{
 		<li><i style="color:yellow;">(?m)%{GREEDYDATA:content}</i>: 	Content</li>
 	</ul>
   </section>
-  2015-07-02 00:13:48,804 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content
-   <section id="output">
+  <section id="multiline">
 	<ul>
-		Logstash output
+		If you have multiline logs
+	<pre><code style="font-size: 40%;">
+2015-07-02 04:21:44,600 - [INFO] [Class.java:523] - Content [
+	line1
+	...]
+	</code></pre>
+	</ul>
+  </section>
+  <section id="multilinecodec">
+	<ul>
+		You can use multiline codec (in input)...
+	<pre><code style="font-size: 40%;">
+codec => multiline { 
+        pattern => "<pattern>"
+        what => "previous"
+        negate => true
+    }
+	</code></pre>
+	</ul>
+  </section>
+  <section id="multilinecodec1">
+	<ul>
+		<li><i class="fa fa-thumbs-up"></i>	Pros
+		<ul>
+			<li>Concatenate multiline logs directly in input</li>
+		</ul></li><br>
+		<li><i class="fa fa-thumbs-down"></i>	Cons
+		<ul>
+			<li>Not made to receive differents logs on the same port</li>
+			<li>In the current version, omit the last multiline log in the file</li>
+		</ul></li>
+	</ul>
+  </section>
+  <section id="multilinefilter">
+	<ul>
+		...Or you can use multiline filter (in filter)
+	<pre><code style="font-size: 40%;">
+multiline {
+        pattern => "<pattern>"
+        what => "previous"
+        negate => true
+    }
+	</code></pre>
+	</ul>
+  </section>
+    <section id="multilinefilter1">
+	<ul>
+		<li><i class="fa fa-thumbs-up"></i>	Pros
+		<ul>
+			<li>Flushing feature</li>
+		</ul></li><br>
+		<li><i class="fa fa-thumbs-down"></i>	Cons
+		<ul>
+			<li>Not working well when receiving large flow of data</li>
+		</ul></li><br><br>
+		<li>However, <strong>should work well</strong> for real-time analysis
+ 		
+	</ul>
+  </section>
+  <section id="output">
+	<ul>
+		Logstash output (example)
 		<pre><code style="font-size: 40%;">
 output {
 	elasticsearch { host => "elasticsearch" }
@@ -330,7 +394,8 @@ output {
 
 
     var ruban = new Ruban({
-      pagination: true
+      pagination: true,
+	  ratio: 16/9
     });
   </script>
 </body>
