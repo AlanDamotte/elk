@@ -226,13 +226,13 @@
 									<h3>Input</h3>
 									<p>Voici le contenu de notre premier fichier de configuration. Il définit simplement un port sur lequel Logstash va recevoir les logs via Rsyslog</p>
 									<p>
-									<xmp style="text-align:left; margin-left:10%;">
+									<pre style="text-align:left; margin-left:10%;"><code>
 input {
 	syslog {
 		port => 5000
 	}
 }
-								</xmp></p>
+								</code></pre></p>
 								</section>
 							</div>
 							<div class="12u 12u(mobile)">
@@ -241,7 +241,7 @@ input {
 									<p>Ce premier filtre sert de prétraitement. Il va attribuer à chaque logs de nouveaux tags afin de simplifier la suite du travail avec Logstash
 									et les recherches de logs dans Elasticsearch.</p>
 									<p>
-									<xmp style="text-align:left; margin-left:10%;">
+									<pre style="text-align:left; margin-left:10%;"><code>
 filter { 
 	if [program] == "front-access" {
 		mutate {
@@ -259,7 +259,7 @@ filter {
 		}
 	}
 }
-								</xmp></p>
+								</code></pre></p>
 								</section>
 							</div>
 							<div class="12u 12u(mobile)">
@@ -268,11 +268,11 @@ filter {
 									<p>Ce second filtre va s'occuper des logs access. L'intérêt d'avoir défini des tags précédemment est de pouvoir les groks similaires en un seul filtre.
 									Par exemple ici, les logs access ont relativement le même format. Il est possible de définir notre filtre grok pour qu'il accepte plusieurs patterns.</p>
 									<p>
-									<xmp style="text-align:left; margin-left:10%;">
+									<pre style="text-align:left; margin-left:10%;"><code>
 filter{
 	if "access" in [tags]{
 		grok {
-			match => { "message" => ["<pattern1>","<pattern2>"]}
+			match => { "message" => ["&lt;pattern1&gt; ","&gt;pattern2&gt;"]}
 		}
 		date {
 			locale => "en"
@@ -283,10 +283,9 @@ filter{
 		mutate {
 			remove_field => ["timestamp"]
 		}
-
 	}
 }
-<								/xmp></p>
+								</code></pre></p>
 								<p>Pattern 1 :<br />
 								"%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NUMBER:responseTime:float} %{QS:referrer} %{QS:agent}"
 								</p>
@@ -315,11 +314,11 @@ filter{
 									<h3>Dernier filtre</h3>
 									<p>Ce dernier filtre va permettre de parser nos logs applicatifs</p>
 									<p>
-									<xmp style="text-align:left; margin-left:10%;">
+									<pre style="text-align:left; margin-left:10%;"><code>
 filter{
 	if "applicative" in [tags]{
 		grok {
-			match => { "message" =>"<pattern3>"}
+			match => { "message" =>"&lt;pattern3&gt;"}
 		}
 		date {
 			match => ["timestampiso", "yyyy-MM-dd HH:mm:ss,SSS"]
@@ -331,7 +330,7 @@ filter{
 		}
 	}
 }
-								</xmp></p>
+								</code></pre></p>
 								<p>Pattern 3 :<br />
 								"%{TIMESTAMP_ISO8601:timestampiso} - \[%{DATA:requestId}\] - \[%{LOGLEVEL:loglevel}\] \[%{WORD:class}.%{WORD}:%{NUMBER:line:float}\] - (?m)%{GREEDYDATA:content}"
 								</p>
@@ -349,27 +348,27 @@ filter{
 								<section class="box style1">
 									<h3>Et si vous avez des logs multilignes ?</h3>
 									<p>Comme dans cet exemple :<br></p>
-									<p><xmp style="text-align:left; margin-left:10%;">
+									<p><pre style="text-align:left; margin-left:10%;"><code>
 2015-07-02 04:21:44,600 - [INFO] [Class.java:523] - Content [
 line1
 ...]
-									</xmp></p>
+									</code></pre></p>
 									<p>Vous pouvez utiliser les codec multilignes en input : <br>
-									<xmp style="text-align:left; margin-left:10%;">
+									<pre style="text-align:left; margin-left:10%;"><code>
 codec => multiline { 
-        pattern => "<pattern>"
+        pattern => "&lt;pattern&gt;"
         what => "previous"
         negate => true
     }
-									</xmp>
+									</code></pre>
 									Ou le filtre multiligne <br>
-									<xmp style="text-align:left; margin-left:10%;">
+									<pre style="text-align:left; margin-left:10%;"><code>
 multiline {
-        pattern => "<pattern>"
+        pattern => "&lt;pattern&gt;"
         what => "previous"
         negate => true
 }
-								</xmp></p>
+								</code></pre></p>
 								</section>
 							</div>
 							<div class="6u 12u(mobile)">
@@ -401,12 +400,12 @@ multiline {
 								<section class="box style1">
 									<h3>Output</h3>
 									<p>Ceci est en exemple, la configuration de l'output dépend essentiellement de l'architecture utilisée</p>
-									<p><xmp style="text-align:left; margin-left:10%;">
+									<p><pre style="text-align:left; margin-left:10%;"><code>
 output {
 	elasticsearch { host => "elasticsearch" }
 	stdout { codec => rubydebug }
 }
-								</xmp></p>
+								</code></pre></p>
 								</section>
 							</div>
 							<div class="12u 12u(mobile)">
@@ -418,19 +417,19 @@ output {
 										Pour pallier à ceci, deux solutions s'offre à vous :<br><br>
 										Directement lors du parsing
 								
-										<xmp style="text-align:left; margin-left:10%;">
+										<pre style="text-align:left; margin-left:10%;"><code>
 grok {
   match => { "message" =>"...%{NUMBER:responseTime:integer}..."}
  }
-</xmp>
+										</code></pre>
 										
 										Ou dans un mutate
 										
-										<xmp style="text-align:left; margin-left:10%;">
+										<pre style="text-align:left; margin-left:10%;"><code>
 mutate {
  convert => [ "responseTime", "integer" ]
 }
-								</xmp></p>
+								</code></pre></p>
 								</section>
 							</div>
 							
