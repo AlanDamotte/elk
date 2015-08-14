@@ -407,6 +407,30 @@ output {
 </xmp>
 								</section>
 							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<span class="icon featured fa-question"></span>
+									<h3>Typage de données</h3>
+									<p>Lors du découpage des logs par regex grok, il est possible d'avoir des patterns tels que : %{INT:responseTime}. 
+										Attention ! Cela ne veut pas dire que la colonne "responseTime" dans ES sera typée "integer". Elle sera typée "string", comme la quasi-totalité des autres colonnes.
+										Pour pallier à ceci, deux solutions s'offre à vous :<br><br>
+										Directement lors du parsing
+										</p>
+										<xmp style="text-align:left; margin-left:10%;">
+grok {
+  match => { "message" =>"...%{NUMBER:responseTime:integer}..."}
+ }
+</xmp>
+										<p>
+										Ou dans un mutate
+										</p>
+										<xmp style="text-align:left; margin-left:10%;">
+mutate {
+ convert => [ "responseTime", "integer" ]
+}
+</xmp>
+								</section>
+							</div>
 							
 						</div>
 					</div>
@@ -453,6 +477,17 @@ output {
 											<li>Rechercher dans des <strong>champs particuliers</strong>: <i>tags:(access AND middle)</i></li>
 											<li>Rechercher sur un <strong>intervalle</strong> pour les champs <strong>numériques</strong>: <i>line_id:[30000 TO 80000]</i></li>
 										</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Utilisation de scripts dans Kibana</h3>
+									<p>Lors de la création de visualisations dans Kibana 4 vous avez la possibilité d'utiliser des scripts dans le champ "Json input ". 
+									Pour ce faire, vous aurez sans doute besoin de rajouter cette ligne dans le fichier de config Elasticsearch.yml :<br>
+										<b>script.disable_dynamic: false</b><br>
+										De cette façon vous pourrez alors utiliser des scripts de la forme suivante :<br>
+										<b>{"script":"log(_value)/100"}</b>
 									</p>
 								</section>
 							</div>
