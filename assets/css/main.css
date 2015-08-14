@@ -1523,6 +1523,10 @@
 				ul.social li a.fa-envelope {
 					background-color: #01DF3A;
 				}
+				
+				ul.social li a.fa-globe {
+					background-color: #FFFF00;
+				}
 
 				ul.social li a.fa-vimeo {
 					background-color: #4C8AB0;
