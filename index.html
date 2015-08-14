@@ -155,7 +155,7 @@
 							<div class="12u 12u(mobile)">
 								<section class="box style1">
 									<h3>Architecture globale</h3>
-									<img src="images/ELK.png" alt="" />
+									<img src="images/ELK.png" alt="" width="75%"/>
 									<p>A l'intérieur de la bulle de votre projet se trouvent les machines et les services. Chaque service produit des logs qui sont transférés vers un concentrateur.
 									Un shipper va envoyer les logs vers la plateforme ELK. Dans notre cas, nous utiliserons Rsyslog.<br />
 									</p>
@@ -225,14 +225,14 @@
 								<section class="box style1">
 									<h3>Input</h3>
 									<p>Voici le contenu de notre premier fichier de configuration. Il définit simplement un port sur lequel Logstash va recevoir les logs via Rsyslog</p>
-									
+									<p>
 									<xmp style="text-align:left; margin-left:10%;">
 input {
 	syslog {
 		port => 5000
 	}
 }
-</xmp>
+</xmp></p>
 								</section>
 							</div>
 							<div class="12u 12u(mobile)">
