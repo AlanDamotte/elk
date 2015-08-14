@@ -232,7 +232,7 @@ input {
 		port => 5000
 	}
 }
-</xmp></p>
+								</xmp></p>
 								</section>
 							</div>
 							<div class="12u 12u(mobile)">
@@ -240,7 +240,7 @@ input {
 									<h3>Premier filtre</h3>
 									<p>Ce premier filtre sert de prétraitement. Il va attribuer à chaque logs de nouveaux tags afin de simplifier la suite du travail avec Logstash
 									et les recherches de logs dans Elasticsearch.</p>
-									
+									<p>
 									<xmp style="text-align:left; margin-left:10%;">
 filter { 
 	if [program] == "front-access" {
@@ -259,7 +259,7 @@ filter {
 		}
 	}
 }
-</xmp>
+								</xmp></p>
 								</section>
 							</div>
 							<div class="12u 12u(mobile)">
@@ -267,6 +267,7 @@ filter {
 									<h3>Second filtre</h3>
 									<p>Ce second filtre va s'occuper des logs access. L'intérêt d'avoir défini des tags précédemment est de pouvoir les groks similaires en un seul filtre.
 									Par exemple ici, les logs access ont relativement le même format. Il est possible de définir notre filtre grok pour qu'il accepte plusieurs patterns.</p>
+									<p>
 									<xmp style="text-align:left; margin-left:10%;">
 filter{
 	if "access" in [tags]{
@@ -285,7 +286,7 @@ filter{
 
 	}
 }
-</xmp>
+<								/xmp></p>
 								<p>Pattern 1 :<br />
 								"%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NUMBER:responseTime:float} %{QS:referrer} %{QS:agent}"
 								</p>
@@ -313,6 +314,7 @@ filter{
 								<section class="box style1">
 									<h3>Dernier filtre</h3>
 									<p>Ce dernier filtre va permettre de parser nos logs applicatifs</p>
+									<p>
 									<xmp style="text-align:left; margin-left:10%;">
 filter{
 	if "applicative" in [tags]{
@@ -329,7 +331,7 @@ filter{
 		}
 	}
 }
-</xmp>
+								</xmp></p>
 								<p>Pattern 3 :<br />
 								"%{TIMESTAMP_ISO8601:timestampiso} - \[%{DATA:requestId}\] - \[%{LOGLEVEL:loglevel}\] \[%{WORD:class}.%{WORD}:%{NUMBER:line:float}\] - (?m)%{GREEDYDATA:content}"
 								</p>
@@ -347,27 +349,27 @@ filter{
 								<section class="box style1">
 									<h3>Et si vous avez des logs multilignes ?</h3>
 									<p>Comme dans cet exemple :<br></p>
-									<xmp style="text-align:left; margin-left:10%;">
+									<p><xmp style="text-align:left; margin-left:10%;">
 2015-07-02 04:21:44,600 - [INFO] [Class.java:523] - Content [
 line1
 ...]
-</xmp>
-									<p>Vous pouvez utiliser les codec multilignes en input : <br></p>
+									</xmp></p>
+									<p>Vous pouvez utiliser les codec multilignes en input : <br>
 									<xmp style="text-align:left; margin-left:10%;">
 codec => multiline { 
         pattern => "<pattern>"
         what => "previous"
         negate => true
     }
-</xmp>
-									<p>Ou le filtre multiligne <br></p>
+									</xmp>
+									Ou le filtre multiligne <br>
 									<xmp style="text-align:left; margin-left:10%;">
 multiline {
         pattern => "<pattern>"
         what => "previous"
         negate => true
 }
-</xmp>
+								</xmp></p>
 								</section>
 							</div>
 							<div class="6u 12u(mobile)">
@@ -399,12 +401,12 @@ multiline {
 								<section class="box style1">
 									<h3>Output</h3>
 									<p>Ceci est en exemple, la configuration de l'output dépend essentiellement de l'architecture utilisée</p>
-									<xmp style="text-align:left; margin-left:10%;">
+									<p><xmp style="text-align:left; margin-left:10%;">
 output {
 	elasticsearch { host => "elasticsearch" }
 	stdout { codec => rubydebug }
 }
-</xmp>
+								</xmp></p>
 								</section>
 							</div>
 							<div class="12u 12u(mobile)">
@@ -415,20 +417,20 @@ output {
 										Attention ! Cela ne veut pas dire que la colonne "responseTime" dans ES sera typée "integer". Elle sera typée "string", comme la quasi-totalité des autres colonnes.
 										Pour pallier à ceci, deux solutions s'offre à vous :<br><br>
 										Directement lors du parsing
-										</p>
+								
 										<xmp style="text-align:left; margin-left:10%;">
 grok {
   match => { "message" =>"...%{NUMBER:responseTime:integer}..."}
  }
 </xmp>
-										<p>
+										
 										Ou dans un mutate
-										</p>
+										
 										<xmp style="text-align:left; margin-left:10%;">
 mutate {
  convert => [ "responseTime", "integer" ]
 }
-</xmp>
+								</xmp></p>
 								</section>
 							</div>
 							
