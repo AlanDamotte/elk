@@ -1,256 +1,521 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-<head>
-  <title>ELK</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="components/normalize-css/normalize.css" />
-  <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" />
-  <link rel="stylesheet" href="css/ruban.min.css" />
-  <link rel="stylesheet" href="css/ruban-print.min.css" media="print" />
-  <style>
-	body {
-	  color: white;
-	  border-color: white;
+	<head>
+		<title>ELK</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+		
+		<!-- Nav -->
+			<nav id="nav">
+				<ul class="container">
+					<li><a href="#top">Top</a></li>
+					<li><a href="#presentation">Présentation générale</a></li>
+					<li><a href="#howto">Docker ELK générique</a></li>
+					<li><a href="#usecase">Présentation technique</a></li>
+					<li><a href="#author">Me contacter</a></li>
+					
+				</ul>
+			</nav>
+			
+
+		<!-- Home -->
+			<div class="wrapper style1 first">
+				<article class="container" id="top">
+					<div class="row">
+						<div class="4u 12u(mobile)">
+							<span class="image fit"><img src="https://pbs.twimg.com/profile_images/575347766857064448/USjimvnS.png" alt="" /></span>
+						</div>
+						<div class="8u 12u(mobile)">
+							<header>
+								<h1><strong>ELK</strong></h1>
+								<h3>Analysez, recherchez et visualisez vos données</h3>
+							</header>
+							<a href="#presentation" class="button big scrolly">Je veux découvrir ELK</a><br>
+							<a href="#usecase" class="button big scrolly">Amenez moi à la partie technique</a>
+						</div>
+					</div>
+				</article>
+			</div>
+			
+		<!-- Generale -->
+			<div class="wrapper style2">
+				<article id="presentation">
+					<header>
+						<h2>Qu'est-ce que ELK ?</h2>
+						Elasticsearch - Logstash - Kibana
+					</header>	
+					<div class="container">
+						<div class="row">
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<span class="icon featured fa-question"></span>
+									<h3>Pourquoi utiliser ELK ?</h3>
+									<p>Votre application produit des données qui peuvent rapidement devenir <strong>conséquentes</strong>.
+									Plus elles sont <strong>nombreuses</strong> et moins l'analyse que vous pourrez en faire sera <strong>lente</strong>.
+									ELK va vous permettre de :
+									<ul>
+										<li><strong>Centraliser</strong> vos données</li>
+										<li><strong>Parser</strong> et <strong>récupérer</strong> uniquement les informations qui vous sont utiles</li>
+										<li><strong>Visualiser</strong> vos logs et <strong>identifiez</strong> l'information en un rien de temps !</li>
+									</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Logstash</h3>
+									<p>
+									<ul>
+										<li>Centraliser des données de tout type</li>
+										<li>Normaliser et regrouper en une sortie unique des données aux schémas et formats variables</li>
+										<li>Modifier les formats de logs en ajoutant/modifiant/supprimant des champs</li>
+										<li>Ajouter et utiliser des plugins très facilement</li>
+									</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Elasticsearch</h3>
+									<p>
+									<ul>
+										<li>Moteur de recherche distribué, évolutif et hautement disponible</li>
+										<li>Capacité de recherche et d'analyse de données en temps réel</li>
+										<li>Fonctionne à base d'API Restful</li>
+									</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Kibana</h3>
+									<p>
+									<ul>
+										<li>Plateforme flexible d'analyse et de visualisation</li>
+										<li>Interface intuitive pour une grande variété d'utilisateurs</li>
+										<li>Possiblité de partager en un rien de temps les tableaux de bords</li>
+									</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Quelques conseils</h3>
+									<p>Pensez à bien formater vos logs, la construction de vos filtres n'en sera que plus simple.<br>
+									Vous pouvez aussi ajouter un identifiant de suivi au sein de votre application. Il vous permettra, par exemple,
+									de suivre les actions associées à une requête. En effet, grâce à Elasticsearch et Kibana, vous pourrez afficher les logs contenant cet id.
+									</p>
+								</section>
+							</div>
+						</div>
+					</div>
+					<footer>
+						<a href="#howto" class="button big scrolly">Je veux essayer ELK</a>
+					</footer>
+				</article>
+			</div>
+			<div class="wrapper style2">
+				<article id="howto">
+					<header>
+						<h2>Comment tester rapidement ELK?</h2>
+					</header>	
+					<div class="container">
+						<div class="row">
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<span class="icon featured fa-download"></span>
+									<h3>Docker ELK générique</h3>
+									<p>Je vous proprose d'utiliser le Docker ELK générique que j'ai mis en place et disponible ici : <a href="https://gitlab.kazan.priv.atos.fr/A605547/docker-elk/tree/master" title="Docker ELK"><i class="fa fa-git-square"></i></a><br>
+									L'intérêt ici est de pouvoir déployer rapidement une stack ELK et ne se concentrer que sur les fichiers de configurations Logstash. Il ne vous restera qu'à suivre le tutoriel.
+									</p>
+								</section>
+							</div>
+						</div>
+					</div>
+					<footer>
+						<a href="#usecase" class="button big scrolly">Présentation technique</a>
+					</footer>
+				</article>
+			</div>
+
+		<!-- Technique -->
+			<div class="wrapper style2">
+				<article id="usecase">
+					<header>
+						<h2>Cas d'usage et contexte</h2>
+					</header>
+					<div class="container">
+						<div class="row">
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Architecture globale</h3>
+									<img src="images/ELK.png" alt="" />
+									<p>A l'intérieur de la bulle de votre projet se trouvent les machines et les services. Chaque service produit des logs qui sont transférés vers un concentrateur.
+									Un shipper va envoyer les logs vers la plateforme ELK. Dans notre cas, nous utiliserons Rsyslog.<br />
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Au niveau du front...</h3>
+									<p>Imaginons une requête produisant ce log :<br />
+									<b>127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.0" 200 3175 17173 "-" "-"</b>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Au niveau du middle...</h3>
+									<p>Le serveur reçoit cette requête et produit le log suivant :<br />
+									<b>127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/2 HTTP/1.1" 200 35</b><br /><br />
+									Enfin le logger de l'application produit ces 2 logs :<br />
+									<b>2015-07-02 00:13:48,804 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content<br />
+									2015-07-02 00:13:48,885 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content</b>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Configuration Rsyslog</h3>
+									<p>Maintenant imaginons une configuration Rsyslog permettant d'attribuer une étiquette à chaque log envoyé.<br />
+									Les logs étant tous envoyés sur un même port, cette étiquette va nous servir plus tard à différencier les logs.<br />
+									<ul>
+									<li><strong>front-access</strong>: Pour les logs access produits au niveau du front.</li>
+									<li><strong>middle-access</strong>: Pour les logs access produits au niveau du middle</li>
+									<li><strong>middle-applicative</strong>: Pour les logs applicatifs</li>
+									</ul>
+									</p>
+								</section>
+							</div>
+
+						</div>
+					</div>
+
+				</article>
+			</div>
+
+		<!-- Portfolio -->
+			<div class="wrapper style3">
+				<article id="logstash">
+					<header>
+						<h2>Configurations de Logstash</h2>
+					</header>
+					<div class="container">
+						<div class="row">
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<span class="icon featured fa-question"></span>
+									<h3>Avant de commencer</h3>
+									<p>Il est conseillé d'utiliser un fichier de configuration différent pour chaque filtre. J'utilise, par exemple, cette convention :<br />
+									<ul>
+										<li>De 01 à 09 pour les inputs (Exemple : 01-input.conf)</li>
+										<li>De 10 à 29 pour les filtres (Exemple : 10-filtre.conf)</li>
+										<li>A partir de 30 pour les outputs (Exemple : 30-output.conf)</li>
+									</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Input</h3>
+									<p>Voici le contenu de notre premier fichier de configuration. Il définit simplement un port sur lequel Logstash va recevoir les logs via Rsyslog</p>
+									
+									<xmp style="text-align:left; margin-left:10%;">
+input {
+	syslog {
+		port => 5000
 	}
-	
-    section {
-	  color: white;
-      background-color: #0071B5;
-      border-left: 1em solid white;
-    }
-	
-	section aside{
-	  text-align: right; 
-	  font-size:50%;
-    }
-
-    .pagination {
-      right: 2.6em;
-    }
-
-    pre code {
-      background-color: inherit;
-    }
-
-    pre .xml .javascript {
-      opacity: 1;
-    }
-	
-	ul ul{
-		text-align: right; 
+}
+</xmp>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Premier filtre</h3>
+									<p>Ce premier filtre sert de prétraitement. Il va attribuer à chaque logs de nouveaux tags afin de simplifier la suite du travail avec Logstash
+									et les recherches de logs dans Elasticsearch.</p>
+									
+									<xmp style="text-align:left; margin-left:10%;">
+filter { 
+	if [program] == "front-access" {
+		mutate {
+			add_tag=> ["front","access"]
+		}
 	}
+	if [program] == "middle-access" {
+		mutate {
+			add_tag=> ["middle","access"]
+		}
+	}
+	if [program] == "middle-applicative" {
+		mutate {
+			add_tag=> ["middle","applicative"]
+		}
+	}
+}
+</xmp>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Second filtre</h3>
+									<p>Ce second filtre va s'occuper des logs access. L'intérêt d'avoir défini des tags précédemment est de pouvoir les groks similaires en un seul filtre.
+									Par exemple ici, les logs access ont relativement le même format. Il est possible de définir notre filtre grok pour qu'il accepte plusieurs patterns.</p>
+									<xmp style="text-align:left; margin-left:10%;">
+filter{
+	if "access" in [tags]{
+		grok {
+			match => { "message" => ["<pattern1>","<pattern2>"]}
+		}
+		date {
+			locale => "en"
+			match => ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
+			target => "@timestamp"
+			timezone => "Europe/Paris"
+		}
+		mutate {
+			remove_field => ["timestamp"]
+		}
 
-    #examples ul {
-      padding-left: 0;
+	}
+}
+</xmp>
+								<p>Pattern 1 :<br />
+								"%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NUMBER:responseTime:float} %{QS:referrer} %{QS:agent}"
+								</p>
+								<ul>
+									<li><b>%{IPORHOST:clientip}</b>:	127.0.0.1</li>
+									<li><b>\[%{HTTPDATE:timestamp}\]</b>: 	[02/Jul/2015:00:13:48 +0200]</li>
+									<li><b>\"%{DATA:requestId}\"</b>:	 VboEgQpaiRAAAB0bBJgAAACD</li>
+									<li><b>%{WORD:verb}</b>: 	GET</li>
+									<li><b>%{NOTSPACE:request}</b>: 	/sthing/</li>
+									<li><b>%{NUMBER:responseTime:float}</b>: 	17173</li>
+								</ul>
+								<p>Pattern 2 :<br />
+								"%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{DATA:requestId}\" \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-)"
+								</p>
+								<ul>
+									<li><b>%{IPORHOST:clientip}</b>:	127.0.0.1</li>
+									<li><b>\[%{HTTPDATE:timestamp}\]</b>: 	[02/Jul/2015:00:13:48 +0200]</li>
+									<li><b>\"%{DATA:requestId}\"</b>:	 VboEgQpaiRAAAB0bBJgAAACD</li>
+									<li><b>%{WORD:verb}</b>: 	GET</li>
+									<li><b>%{NOTSPACE:request}</b>: 	/sthing/2</li>
+								</ul>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Dernier filtre</h3>
+									<p>Ce dernier filtre va permettre de parser nos logs applicatifs</p>
+									<xmp style="text-align:left; margin-left:10%;">
+filter{
+	if "applicative" in [tags]{
+		grok {
+			match => { "message" =>"<pattern3>"}
+		}
+		date {
+			match => ["timestampiso", "yyyy-MM-dd HH:mm:ss,SSS"]
+			target => "@timestamp"
+			timezone => "Europe/Paris"
+		}
+		mutate {
+			remove_field => ["timestampiso"]
+		}
+	}
+}
+</xmp>
+								<p>Pattern 3 :<br />
+								"%{TIMESTAMP_ISO8601:timestampiso} - \[%{DATA:requestId}\] - \[%{LOGLEVEL:loglevel}\] \[%{WORD:class}.%{WORD}:%{NUMBER:line:float}\] - (?m)%{GREEDYDATA:content}"
+								</p>
+								<ul>
+									<li><b>%{TIMESTAMP_ISO8601:timestampiso}</b>:	2015-07-02 00:13:48,804</li>
+									<li><b>\[%{DATA:requestId}\]</b>: 	VboEgQpaiRAAAB0bBJgAAACD</li>
+									<li><b>\[%{LOGLEVEL:loglevel}\]</b>:	 INFO</li>
+									<li><b>%{WORD:class}</b>: 	Class</li>
+									<li><b>%{NUMBER:line:float}</b>: 	55</li>
+									<li><b>(?m)%{GREEDYDATA:content}</b>: 	Content</li>
+								</ul>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Et si vous avez des logs multilignes ?</h3>
+									<p>Comme dans cet exemple :<br></p>
+									<xmp style="text-align:left; margin-left:10%;">
+2015-07-02 04:21:44,600 - [INFO] [Class.java:523] - Content [
+line1
+...]
+</xmp>
+									<p>Vous pouvez utiliser les codec multilignes en input : <br></p>
+									<xmp style="text-align:left; margin-left:10%;">
+codec => multiline { 
+        pattern => "<pattern>"
+        what => "previous"
+        negate => true
     }
-	
-	#elk, #elk1, #installation, #why, #components, #implementations, #dontforget, #pre-end, #end, #presentations {
-      color: white;
-      background-color: #0071B5;
-	  border-color: #0071B5;
-    }
+</xmp>
+									<p>Ou le filtre multiligne <br></p>
+									<xmp style="text-align:left; margin-left:10%;">
+multiline {
+        pattern => "<pattern>"
+        what => "previous"
+        negate => true
+}
+</xmp>
+								</section>
+							</div>
+							<div class="6u 12u(mobile)">
+								<section class="box style1">
+									<h3>Avantages et inconvénient du codec multilignes</h3>
+									<p>
+										<ul>
+											<li><i class="fa fa-thumbs-up"></i>	Concatène les logs directement en input<br />
+											<li><i class="fa fa-thumbs-down"></i>	Non conçu pour recevoir différents logs sur le même port
+											<li><i class="fa fa-thumbs-down"></i>	Version actuelle : omet le dernier log multiligne d'un fichier
+										</ul>
+									</p>
+								</section>
+							</div>
+							<div class="6u 12u(mobile)">
+								<section class="box style1">
+									<h3>Avantages et inconvénient du filtre multilignes</h3>
+									<p>
+										<ul>
+											<li><i class="fa fa-thumbs-up"></i>	Flushing automatique
+											<li><i class="fa fa-thumbs-down"></i>	Ne fonctionne pas bien si le flux de données entrant est trop important
+											<li>Cependant, <strong>devrait fonctionner correctement</strong> pour l'analyse en temps réel.
+											
+										</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Output</h3>
+									<p>Ceci est en exemple, la configuration de l'output dépend essentiellement de l'architecture utilisée</p>
+									<xmp style="text-align:left; margin-left:10%;">
+output {
+	elasticsearch { host => "elasticsearch" }
+	stdout { codec => rubydebug }
+}
+</xmp>
+								</section>
+							</div>
+							
+						</div>
+					</div>
+				</article>
+			</div>
+			
+			<!-- Kibana -->
+			<div class="wrapper style2">
+				<article id="kibana">
+					<header>
+						<h2>Kibana</h2>
+					</header>
+					<div class="container">
+						<div class="row">
+							<div class="12u 12u(mobile)">
+								<article class="box style2">
+									<img src="images/kibana.png" alt="" width="100%" height="100%"/>
+									<h3>Interface</h3>
+									<p>Après le lancement de la stack ELK, vous devriez pouvoir accéder à Kibana. 
+										La première page sur laquelle vous allez tomber est la partie "<strong>Settings</strong>". 
+										Il s'agit simplement de dire à Kibana quel format d'index il doit chercher. 
+										Si des logs ont correctement été parsés, un simple rafraichissement de la page devrait vous permettre de créer l'index. 
+										Vous aurez ainsi accès aux différents champs créés, automatiquement ou via vos filtres, par logstash lors du parsing des logs.<br/>
+										Vous pouvez désormais vous rendre dans la partie "<strong>Discover</strong>". 
+										Pour pouvoir visualiser vos logs, choisir en haut à droite de la page, la plage horaire de recherche en fonction de la date de vos logs. 
+										Vous devriez alors normalement voir vos logs. Il est possible d'effectuer de recherche directment via des requêtes, ou en utilisant la table de gauche.<br>
+										La partie "<strong>Visualisation</strong>" vous permet de créer des graphes en fonction d'une ou plusieurs recherches. La partie "<strong>Dashboard</strong>" permet de rassembler et organiser plusieurs visualisations sur un même tableau de bord. 
+										<br><br>
+										Vous pouvez également, par exemple, recentrer votre recherche sur les logs contenant un <strong>id précis</strong> :
+									</p>
+									<img src="images/id.png" alt=""/>
+									<p>
+										Vous verrez ainsi tous les logs correspondant à une requête.
+									</p>
+								</article>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Recherche de logs : quel format de requête ?</h3>
+									<p>Afin d'effectuer une recherche dans Kibana, il est possible 
+										<ul>
+											<li><strong><i>to be or not to be</i></strong> : est équivalent à <strong><i>to OR be OR or OR not OR to OR be</i></strong></li>
+											<li>Rechercher une <strong>expression</strong> : <i>"to be or not to be"</i></li>
+											<li>Rechercher dans des <strong>champs particuliers</strong>: <i>tags:(access AND middle)</i></li>
+											<li>Rechercher sur un <strong>intervalle</strong> pour les champs <strong>numériques</strong>: <i>line_id:[30000 TO 80000]</i></li>
+										</ul>
+									</p>
+								</section>
+							</div>
+							<div class="12u 12u(mobile)">
+								<section class="box style1">
+									<h3>Merci de votre attention ! Des questions ?</h3>
+									<span class="icon featured fa-hand-o-down"></span>
+									</p>
+								</section>
+							</div>
+						</div>
+					</div>
+					<footer>
+						<a href="#author" class="button big scrolly">Me contacter</a>
+					</footer>
+				</article>
+			</div>
+			<!-- Contact -->
+			<div class="wrapper style4">
+				<article id="author" class="container 75%">
+					<header>
+						<h2>Comment me contacter ?</h2>
+						<p>Vous pouvez m'envoyer un mail en suivant ce lien</p><br />
+						<ul class="social">
+							<li><a href="mailto:alan.damotte@gmail.com" class="icon fa-envelope"><span class="label">Contact</span></a></li>
+						</ul>
+					</header>
+						<div class="row">
+							<div class="12u">
+								<hr />
+								<h3>Vous pouvez aussi me retrouver sur les réseaux sociaux...</h3>
+								<ul class="social">
+									<li><a href="https://twitter.com/AlanDams" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="https://fr.linkedin.com/pub/alan-damotte/a9/990/354" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="http://alandamotte.github.io/" class="icon fa-github"><span class="label">Github</span></a></li>
+									<!--
+									<li><a href="#" class="icon fa-rss"><span>RSS</span></a></li>
+									<li><a href="#" class="icon fa-instagram"><span>Instagram</span></a></li>
+									<li><a href="#" class="icon fa-foursquare"><span>Foursquare</span></a></li>
+									<li><a href="#" class="icon fa-skype"><span>Skype</span></a></li>
+									<li><a href="#" class="icon fa-soundcloud"><span>Soundcloud</span></a></li>
+									<li><a href="#" class="icon fa-youtube"><span>YouTube</span></a></li>
+									<li><a href="#" class="icon fa-blogger"><span>Blogger</span></a></li>
+									<li><a href="#" class="icon fa-flickr"><span>Flickr</span></a></li>
+									<li><a href="#" class="icon fa-vimeo"><span>Vimeo</span></a></li>
+									-->
+								</ul>
+								<hr />
+							</div>
+						</div>
+						&copy; Présentation ELK. All rights reserved.</li><li>Design: <a href="http://html5up.net" style="text-decoration:none">HTML5 UP</a>
+			</div>
+				</article>
+			</div>
 
-	
-	#author {
-      color: white;
-      background-color: #0071B5;
-	  border-left: 1em solid #819FF7;
-    }
-  </style>
-</head>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
 
-<body>
-  <section id="elk" class="no-toc">
-   <h1>
-	<ul>
-      <li><strong>E</strong>lasticsearch</li>
-      <li><strong>L</strong>ogstash</li>
-      <li><strong>K</strong>ibana</li>
-    </ul>
-	</h1>
-  </section>
-  <section id="elk1" class="no-toc" text-align:center>
-    <h1><strong>Analyze</strong>, <strong>Search</strong>,<br> <strong>Visualize</strong><br> your data!</h1>
-  </section>
-  <section id="author" class="no-toc" text-align:center>
-    <h1>Alan Damotte</h1>
-	<ul>
-	  <li><i class="fa fa-twitter"></i><a href="https://twitter.com/AlanDams" title="Alan Damotte">	@AlanDams</a></li>
-	  <li><i class="fa fa-linkedin"></i><a href="https://fr.linkedin.com/pub/alan-damotte/a9/990/354" title="Alan Damotte">	Alan Damotte</a></li>
-	  <li><i class="fa fa-envelope"></i></i><a href="mailto:alan.damotte@gmail.com" title="alan.damotte@gmail.com">	Alan.damotte@gmail.com</a></li>
-	  <li><i class="fa fa-github"></i> <a href="http://alandamotte.github.io/" title="Alan Damotte">	Alan Damotte</a></li>
-	</ul>
-  </section>
-  <section id="presentations" class="no-toc" text-align:center>
-	<ul>
-	  <li><i class="fa fa-angle-up"></i><a href="#/table-of-contents" title="See Logstash">	Global Overview</a></li>
-	  <li><i class="fa fa-angle-double-up"></i><a href="./technicalpresentation/index.html" title="Technical presentation">	Technical presentation</a></li>
-	</ul>
-  </section>
-  
-  <section id="table-of-contents" class="toc">
-    <h1>Table of contents</h1>
-  </section>
-  <section id="why">
-    <h1><i class="fa fa-rocket"></i> Why should you use ELK ?</h1>
-  </section>
-  <section id="why-elk1">
-   <ul>
-      Data <strong>constantly</strong> flows into your systems, but it can quickly grow to be <strong>fat</strong> !   
-   </ul>
-  </section>
-  <section id="why-elk2">
-   <ul>
-      As your data set <strong>grows larger</strong>, your analytics will <strong>slow up</strong>, resulting in sluggish insights.   
-   </ul>
-  </section>
-  <section id="why-elk3">
-   <ul>
-       <li>How can you maintain valuable business insights?</li> 
-	   <li><i class="fa fa-thumbs-o-up"></i>	Use <strong>ELK !</strong></li> 
-   </ul>
-  </section>
-  <section id="why-elk4">
-   <ol>
-      <li><strong>Centralize</strong> your logs</li>
-      <li><strong>Parse</strong> and <strong>gather</strong> only the fields you need</li>
-      <li><strong>Visualize</strong> your logs and <strong>identify</strong> the information <strong>quickly</strong></li>
-    </ol>
-  </section>
-  <section id="components">
-    <h1><i class="fa fa-wrench"></i> The components</h1>
-  </section>
-    <section id="components1">
-    <ol>
-      <li><a href="#/logstash" title="See Logstash"><strong>Logstash</strong></a>: Processes incoming logs</li><br>
-      <li><a href="#/elastic" title="See Elasticsearch"><strong>Elasticsearch</strong></a>: Stores all of the logs</li><br>
-      <li><a href="#/kibana" title="See Kibana"><strong>Kibana</strong></a>: Web interface for searching and visualizing logs</li>
-    </ol>
-  </section>
-  <section id="logstash">
-	<h1>Logstash</h1>
-	   <ul>
-	 <li><i class="fa fa-caret-right fa-fw"></i>	Centralize data processing of all types</li>
-	 <li><i class="fa fa-caret-right fa-fw"></i>	Normalize varying schema and formats</li>
-	 <li><i class="fa fa-caret-right fa-fw"></i>	Quickly extend to custom log formats</li>
-	 <li><i class="fa fa-caret-right fa-fw"></i>	Easily add plugins for custom data sources</li>
-	    </ul>
-		<aside><a href="https://www.elastic.co/products/logstash" title="Logstash">Source</a></aside>
-  </section>
-  <section id="elastic">
-	<h1>Elasticsearch</h1>
-	 <ul>
-		<li><i class="fa fa-caret-right fa-fw"></i></i>	Distributed, scalable, and highly available</li>
-		<li><i class="fa fa-caret-right fa-fw"></i></i>	Real-time search and analytics capabilities</li>
-		<li><i class="fa fa-caret-right fa-fw"></i></i>	Sophisticated RESTful API</li>
-	 </ul>
-	 <aside><a href="https://www.elastic.co/products/elasticsearch" title="Elasticsearch">Source</a></aside>
-  </section>
-  <section id="kibana">
-	<h1>Kibana</h1>
-		 <ul>
-		<li><i class="fa fa-caret-right fa-fw"></i>	Flexible analytics and visualization platform</li>
-		<li><i class="fa fa-caret-right fa-fw"></i>	Real-time summary and charting of streaming data</li>
-		<li><i class="fa fa-caret-right fa-fw"></i>	Intuitive interface for a variety of users</li>
-		<li><i class="fa fa-caret-right fa-fw"></i>	Instant sharing and embedding of dashboards</li>
-	 </ul>
-	 <aside><a href="https://www.elastic.co/products/kibana" title="Kibana">Source</a></aside>
-  </section>
-  <section id="installation">
-    <h1><i class="fa fa-download"></i> How to quickly test it ?</h1>
-  </section>
-  <section id="Docker-ELK">
-    <h1>Docker ELK</h1>
-	<ul>
-		<li>You can use my stack on Docker, all you need is just to set up your Logstash configurations !</li>
-		<li><i class="fa fa-git-square"></i><a href="https://gitlab.kazan.priv.atos.fr/A605547/docker-elk/tree/master" title="Docker ELK">	Docker ELK repository</a></li>
-	</ul>
-    <ol>
-      <li>Follow the tutorial (in French)</li>
-      <li>Enjoy !</li>
-    </ol>
-  </section>
-  <section id="implementations">
-    <h1><i class="fa fa-cog"></i> Possible implementations</h1>
-  </section>
-  <section id="local">
-    <ul>
-	 <li>Using my Docker ELK...</li><br>
-	 <ul>
-		<li>You can <strong>build</strong> it and <strong>run</strong> it locally,</li>
-		<li><strong>Adapt</strong> it and <strong>punctually use</strong> it</li>
-	 </ul>
-	</ul>
-  </section>
-  <section id="shipper">
-	<ul>
-	 <li>...or using <strong>agents</strong> which will <strong>ship</strong> logs from your project to ELK platform :</li><br>
-	 <ul>
-		<li>Logstash itself</li>
-		<li>Syslog and friends (rsyslog,...)</li>
-		<li>Logstash-forwarder</li>
-	 </ul>
-	</ul>
-  </section>
-    <section id="dontforget">
-    <h1><i class="fa fa-star"></i> Don't forget...</h1>
-	</section>
-	 <section id="df1">
-   <ul>
-      ...In your new projects to format your logs <strong>correctly</strong>.
-   </ul>
-  </section>
-  <section id="df2">
-   <ul>
-      ...set up this solution <strong>while you build your app</strong>.
-   </ul>
-  </section>
-  <section id="df3">
-   <ul>
-      <li><i class="fa fa-caret-right"></i></i>	A small <strong>tip</strong> I can give you is to add an ID in your app which, for example, helps you follow a request through different services.</li>
-	  <br>
-	  <li><i class="fa fa-caret-right"></i></i>	In Kibana, you'll be able to see all the logs related to that request.</li>
-   </ul>
-  </section>
-   <section id="pre-end">
-  <h1>Want to see the technical presentation?</h1>
-   <ul>
-	  <li><i class="fa fa-thumbs-up fa-fw"></i><a href="./technicalpresentation/index.html" title="Yes">	Yes</a></li>
-	  <li><i class="fa fa-thumbs-down fa-fw"></i><a href="#/end" title="No">	No</a></li>
-   </ul>
-  </section>
-  <section id="end">
-  <h1>Thanks! Questions?</h1>
-   <ul>
-	  <li>Feel <strong>free</strong> to contact me !</li>
-	  <li><br><li>
-      <li><i class="fa fa-github"></i> <a href="http://alandamotte.github.io/" title="Alan Damotte">	Alan Damotte</a></li>
-	  <li><i class="fa fa-envelope"></i></i><a href="mailto:alan.damotte@gmail.com" title="alan.damotte@gmail.com">		Alan.damotte@gmail.com</a></li>
-   </ul>
-  </section>
-  <script src="components/jquery/jquery.min.js"></script>
-  <script src="components/keymaster/keymaster.js"></script>
-  <script src="components/hammerjs/hammer.min.js"></script>
-  <script src="components/highlightjs/highlight.pack.js"></script>
-  <script src="js/ruban.min.js"></script>
-  <script>
-
-    var timeoutId, i = 0;
-
-    $('#events').on({
-      active: function() {
-        $(this).find('h1').stop().animate({marginLeft: '2em'}, 2000);
-      },
-      inactive:function() {
-        $(this).find('h1').stop().animate({marginLeft: 0});
-      }
-    });
-
-
-    var ruban = new Ruban({
-      pagination: true
-    });
-  </script>
-</body>
+	</body>
 </html>
