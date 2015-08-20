@@ -175,6 +175,8 @@
 									<h3>Au niveau du front...</h3>
 									<p>Imaginons une requête produisant ce log :<br />
 									<b>127.0.0.1 - - [02/Jul/2015:00:13:48 +0200] "VboEgQpaiRAAAB0bBJgAAACD" "GET /sthing/ HTTP/1.0" 200 3175 17173 "-" "-"</b>
+									<br><i>"VboEgQpaiRAAAB0bBJgAAACD" correspond à un identifiant unique généré pour chaque requête entrante et permettant de suivre les actions
+									qui sont effectuées et correspond à cette requête</i>
 									</p>
 								</section>
 							</div>
@@ -186,6 +188,7 @@
 									Enfin le logger de l'application produit ces 2 logs :<br />
 									<b>2015-07-02 00:13:48,804 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content<br />
 									2015-07-02 00:13:48,885 - [VboEgQpaiRAAAB0bBJgAAACD] - [INFO] [Class.java:55] - Content</b>
+									<br><i>"VboEgQpaiRAAAB0bBJgAAACD" correspond à l'identifiant unique récupéré</i>
 									</p>
 								</section>
 							</div>
