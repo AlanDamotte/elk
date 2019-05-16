@@ -299,7 +299,7 @@ filter {
 filter{
 	if "access" in [tags]{
 		grok {
-			match => { "message" => ["&lt;pattern1&gt; ","&gt;pattern2&gt;"]}
+			match => { "message" => ["&lt;pattern1&gt; ","&lt;pattern2&gt;"]}
 		}
 		date {
 			locale => "en"
